@@ -198,7 +198,7 @@ export default defineConfig({
   server: {
     allowedHosts: [
       host,
-      "02f9-103-209-37-59.ngrok-free.app" // 👈 Add your current ngrok URL here
+      "shipped-against-hits-rain.trycloudflare.com" // 👈 Add your current ngrok URL here
     ],
     cors: {
       preflightContinue: true,
