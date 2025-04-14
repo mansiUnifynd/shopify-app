@@ -28,6 +28,7 @@
 // }
 
 
+// This code below extrtacts the clientId and stores it in memory that is later called inside webhooks.app.orders-create.jsx and sent to mmixpanel
 import { json } from "@remix-run/node";
 import fs from "fs/promises";
 import path from "path";

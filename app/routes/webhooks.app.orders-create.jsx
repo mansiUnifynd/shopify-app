@@ -134,8 +134,7 @@
 // Checking if i can call the client if from the apiVersion.store-clientId.js
 
 import { authenticate } from "../shopify.server";
-import { clientIdStore } from "./api.store-clientId"; // Import the clientIdStore
-
+import { clientIdStore } from "./api.store-clientId"; // Import the clientIdStore and send it as discinct_id
 export const action = async ({ request }) => {
   const { shop, topic } = await authenticate.webhook(request);
 
