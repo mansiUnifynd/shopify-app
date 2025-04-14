@@ -3,7 +3,7 @@
 client_id = "c11e327562ea0ca61ce4487a211390c5"
 name = "test-web-pixel"
 handle = "test-web-pixel-11"
-application_url = "https://davidson-job-fatal-lasting.trycloudflare.com"
+application_url = "https://mounting-hebrew-board-momentum.trycloudflare.com"
 embedded = true
 
 [build]
@@ -59,9 +59,9 @@ scopes = "read_customer_events,read_orders,write_orders,write_pixels,read_assign
 
 [auth]
 redirect_urls = [
-  "https://davidson-job-fatal-lasting.trycloudflare.com/auth/callback",
-  "https://davidson-job-fatal-lasting.trycloudflare.com/auth/shopify/callback",
-  "https://davidson-job-fatal-lasting.trycloudflare.com/api/auth/callback"
+  "https://mounting-hebrew-board-momentum.trycloudflare.com/auth/callback",
+  "https://mounting-hebrew-board-momentum.trycloudflare.com/auth/shopify/callback",
+  "https://mounting-hebrew-board-momentum.trycloudflare.com/api/auth/callback"
 ]
 
 [pos]

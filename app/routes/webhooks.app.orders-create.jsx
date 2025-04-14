@@ -43,36 +43,47 @@
 // };
 
 
-import { authenticate } from "../shopify.server";
 
-export const action = async ({ request }) => {
-  const { shop, topic } = await authenticate.webhook(request);
 
-  console.log(`Received ${topic} webhook for ${shop}`);
 
-  try {
-    const mixpanelEvent = {
-      event: "Purchased",
-      properties: {
-        token: "5b1e136ab5f2e01c3ad5116151e68860", // Replace with your actual Mixpanel token
-      },
-    };
 
-    await fetch("https://api.mixpanel.com/track/", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams({
-        data: btoa(JSON.stringify(mixpanelEvent)),
-      }),
-    });
+// Properly working webhook for checkout_Completed event
 
-    console.log("checkout_completed event sent to Mixpanel");
-  } catch (error) {
-    console.error("Error sending event to Mixpanel:", error);
-  }
+// import { authenticate } from "../shopify.server";
 
-  return new Response();
-};
+// export const action = async ({ request }) => {
+//   const { shop, topic } = await authenticate.webhook(request);
+
+//   console.log(`Received ${topic} webhook for ${shop}`);
+
+//   try {
+//     const mixpanelEvent = {
+//       event: "Purchased",
+//       properties: {
+//         token: "5b1e136ab5f2e01c3ad5116151e68860", // Replace with your actual Mixpanel token
+//       },
+//     };
+
+//     await fetch("https://api.mixpanel.com/track/", {
+//       method: "POST",
+//       headers: { "Content-Type": "application/x-www-form-urlencoded" },
+//       body: new URLSearchParams({
+//         data: btoa(JSON.stringify(mixpanelEvent)),
+//       }),
+//     });
+
+//     console.log("checkout_completed event sent to Mixpanel");
+//   } catch (error) {
+//     console.error("Error sending event to Mixpanel:", error);
+//   }
+
+//   return new Response();
+// };
+
+
+
+
+
 
 
 // import { authenticate } from "../shopify.server";
@@ -115,3 +126,51 @@ export const action = async ({ request }) => {
 
 //   return new Response();
 // };
+
+
+
+
+
+// Checking if i can call the client if from the apiVersion.store-clientId.js
+
+import { authenticate } from "../shopify.server";
+import { clientIdStore } from "./api.store-clientId"; // Import the clientIdStore
+
+export const action = async ({ request }) => {
+  const { shop, topic } = await authenticate.webhook(request);
+
+  console.log(`Received ${topic} webhook for ${shop}`);
+
+  try {
+    // Retrieve the latest clientId from the in-memory store
+    const latestClientId = clientIdStore.length > 0 ? clientIdStore[clientIdStore.length - 1] : null;
+
+    console.log("🔗 Associated clientId:", latestClientId);
+
+    // Prepare the Mixpanel event
+    const mixpanelEvent = {
+      event: "Purchased",
+      properties: {
+        token: "5b1e136ab5f2e01c3ad5116151e68860", // Replace with your actual Mixpanel token
+        distinct_id: latestClientId || "unknown", // Use clientId if available, otherwise fallback
+        shop,
+        topic,
+      },
+    };
+
+    // Send the event to Mixpanel
+    await fetch("https://api.mixpanel.com/track/", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({
+        data: btoa(JSON.stringify(mixpanelEvent)),
+      }),
+    });
+
+    console.log("checkout_completed event sent to Mixpanel");
+  } catch (error) {
+    console.error("Error sending event to Mixpanel:", error);
+  }
+
+  return new Response();
+};

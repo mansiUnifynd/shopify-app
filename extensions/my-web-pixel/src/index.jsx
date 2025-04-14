@@ -85,7 +85,7 @@ register(({ analytics }) => {
     const { clientId } = event;
 
     try {
-      await fetch('https://f594-36-50-79-204.ngrok-free.app/api/store-clientId', {
+      await fetch('https://02f9-103-209-37-59.ngrok-free.app/api/store-clientId', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
